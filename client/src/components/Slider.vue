@@ -15,8 +15,8 @@ export default {
   data() {
     return {
       images: [
-        "https://cdn.pixabay.com/photo/2022/04/21/23/09/23-09-22-892_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2022/04/21/23/09/23-09-22-470_960_720.jpg"
+        require("../assets/Pizza_Mexicana.jpg"),
+        require("../assets/Pizza_Pepperoni.jpg")
       ],
       timer: null,
       currentIndex: 0
