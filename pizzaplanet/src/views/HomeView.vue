@@ -1,9 +1,10 @@
 <template>
   <v-app>
-      <v-main>
+      <v-main>  
         <div id="app">
           <Slider />
         </div>
+    
         <v-container class ="mt-12">
           <Botones />
         </v-container>
