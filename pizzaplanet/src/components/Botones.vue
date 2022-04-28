@@ -12,7 +12,7 @@
         color="#D1493F"
         elevation="9"
         x-largeS
-      > Menu Pizzas</v-btn>
+      >Ordena ahora</v-btn>
     </v-row>
     <v-row
       class ="mt-12"
@@ -25,7 +25,7 @@
         color="#EE7035"
         elevation="9"
         x-largeS
-      > Crea tus Propia Pizza</v-btn>
+      >Crea tu pizza</v-btn>
     </v-row>
   </v-container> 
 </template>
