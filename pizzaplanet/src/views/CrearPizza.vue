@@ -7,7 +7,7 @@
           <thead>
             <tr style="background-color:#EE7035;">
               <th style="font-size: 80px;" class="text-left titulo">
-                Masa
+                Maza
               </th>
               <th class="text-left">
                 
