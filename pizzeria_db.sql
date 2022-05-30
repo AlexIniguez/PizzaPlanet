@@ -138,7 +138,7 @@ INSERT INTO pizzaPredeterminada (nombre, descripcion, ingredientes, imagen, prec
 				de quesos diferentes.', 'Salsa, queso crema, queso mozzarella, queso parmesano y queso cheddar', 
 				'pizzaQuesos.jpg', 90);
                 
-INSERT INTO tamanioPizza (nombre, numPorciones, costoExtra)
+INSERT INTO tamanioPizza (nombre, costoExtra)
 	VALUES ('Chica', 0),
 			('Mediana', 20),
             ('Grande', 40),
