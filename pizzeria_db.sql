@@ -133,12 +133,12 @@ INSERT INTO pizzaPredeterminada (nombre, descripcion, ingredientes, imagen, prec
             ('Carnes Frías', 'Dile hola a una robusta obra de arte con carnes de la más alta calidad.', 'Queso,
 				salsa, pepperoni, salami y jamón.', 'pizzaCarnes.jpg', 100),
             ('Honolulu', 'Te traemos una pizza distinta desde las islas de Hawaii. Una combinación perfecta 
-				entre dulce y picante.', 'Queso, salsa, jamón, piña, tocino y chile jalapeño.', 'pizzaHonolulu.jpg', 100),
+				entre dulce y picante.', 'Queso, salsa, jamón, piña, tocino y chile jalapeño.', 'pizzaHonolulu.png', 100),
             ('Cuatro Quesos', 'Ideal para los amantes del queso, su superficie está condimentada con 4 tipos
 				de quesos diferentes.', 'Salsa, queso crema, queso mozzarella, queso parmesano y queso cheddar', 
-				'pizzaQuesos.jpg', 90);
+				'pizza4Quesos.jpg', 90);
                 
-INSERT INTO tamanioPizza (nombre, numPorciones, costoExtra)
+INSERT INTO tamanioPizza (nombre, costoExtra)
 	VALUES ('Chica', 0),
 			('Mediana', 20),
             ('Grande', 40),
