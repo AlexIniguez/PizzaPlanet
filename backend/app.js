@@ -6,7 +6,11 @@ app.use(cors());
 app.use(express.json()); // Se le dice a express que use este middleware
 app.use(express.urlencoded({extended: true}));
 
-app.use('/pizzaPre', require('./routes/pizzaPredeterminada'));
+app.use('/pizzaPredeterminada', require('./routes/pizzaPredeterminada'));
+app.use('/pizzaPersonalizada', require('./routes/pizzaPersonalizada'));
+app.use('/receta', require('./routes/Receta'));
+app.use('/orden', require('./routes/Orden'));
+app.use('/pedidoPersonalizado', require('./routes/PedidoPersonalizado'))
 
 app.get('/', (req, res) => {
     res.send("GET desde app.js");
