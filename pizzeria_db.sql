@@ -18,8 +18,7 @@ CREATE TABLE IF NOT EXISTS pizzaPredeterminada(
 # Tabla de ordenes:
 CREATE TABLE IF NOT EXISTS orden(
 	id_orden INT NOT NULL AUTO_INCREMENT,
-    fecha DATE NOT NULL,
-    hora TIME NOT NULL,
+    fechaHora DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(5, 1),
     PRIMARY KEY (id_orden)
 );
