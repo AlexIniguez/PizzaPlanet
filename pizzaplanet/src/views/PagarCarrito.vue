@@ -47,6 +47,11 @@
                                                 </v-text-field>
                                             </v-col>
                                         </v-row>
+                                        <v-row align="center" justify="space-around">
+                                            <v-btn dark large class="mx-2" color="#712D87" @click="dialog = !dialog">
+                                                Pagar
+                                            </v-btn>
+                                        </v-row>
                                     </v-container>
                                 </v-form>
                           </v-tab-item>
@@ -88,7 +93,7 @@
                                   </v-card-text>
                                   <v-container>
                                   <v-row align="center" justify="space-around">
-                                            <v-btn class="mx-2"  dark large color="#712D87">
+                                            <v-btn class="mx-2"  dark large color="#712D87"  @click="dialog = !dialog">
                                                 Continuar
                                             </v-btn>
                                         </v-row>
@@ -96,6 +101,22 @@
                               </v-card>
                           </v-tab-item>
                       </v-tabs>
+                    <v-dialog v-model="dialog" max-width="500px">
+                        <v-card>
+                            <v-card-text>
+                                <p class="text-h5 text--primary">
+                                    Tu pago ha sido aprobado
+                                </p>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer>
+                                </v-spacer>
+                                <v-btn class="mx-2" dark color="#712D87" @click="dialog = false" href="/">
+                                    Terminar
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
                   </v-card>
                   
               </v-col>
@@ -109,6 +130,10 @@
 
 <script>
 export default {
-
+    data(){
+        return {
+            dialog: false
+        }
+    }
 }
 </script>
