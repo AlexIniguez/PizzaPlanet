@@ -6,9 +6,9 @@ const connection = require('../connection');
 ruta.get('/', async (req, res) => {
     try {
         const query = 'SELECT * FROM orden';
-        const pizzas = await connection.query(query);
+        const ordenes = await connection.query(query);
 
-        res.send(pizzas);
+        res.send(ordenes);
     } catch (error) {
         return res.json({
             error: error
@@ -16,28 +16,12 @@ ruta.get('/', async (req, res) => {
     }
 });
 
-ruta.post('/', async (req, res) => {
+ruta.post('/nueva_orden', async (req, res) => {
     try {
-        var ahora = Date.now();
-        var reloj = new Date(ahora);
-        var hora = reloj.getHours();
-        var minutos = reloj.getMinutes();
-        var segundos = reloj.getSeconds();
-        var anio= reloj.getFullYear();
-        var mes = reloj.getMonth()+1;
-        var dia = reloj.getDate();
-        var time = hora+":"+ minutos +":" + segundos;
-        var fecha = anio+"-"+mes+"-"+dia;
-        let orden = [fecha, time, req.body.total]
-        const query = 'INSERT INTO orden(fecha, hora, total) VALUES(?)';
-        const respuesta = await connection.query(query, [orden]);
-        let id = respuesta.insertId;
-        const query2 = `SELECT * FROM orden WHERE id_orden = ${id}`;
-        const ordenNueva = await connection.query(query2);
-        res.json(ordenNueva);
-
+        const query = 'INSERT INTO orden (total) VALUES (0)';
+        await connection.query(query);
+        res.send('Orden creada');
     } catch (error) {
-        console.log("error: ", error)
         return res.json({
             error: error
         });
