@@ -3,8 +3,11 @@ const { promisify } = require('util'); // promisify es un módulo que sirve para
 
 const connection = mysql.createPool({
     host: 'localhost',
-    user: 'root',
-    password: 'root',
+
+    // user: 'rootPizzeria',
+    // password: 'root',
+    user: 'user',
+    password: 'Contraseña_123',
     database: 'pizzeria_db',
 })
 
