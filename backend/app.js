@@ -11,8 +11,6 @@ app.use('/ingredientes', require('./routes/Ingredientes'));
 app.use('/tamanios', require('./routes/tamanio'));
 app.use('/ordenes', require('./routes/orden'));
 
-
-
 app.get('/', (req, res) => {
     res.send("GET desde app.js");
 });
