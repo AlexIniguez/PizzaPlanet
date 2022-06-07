@@ -3,7 +3,6 @@
     <h1 class="text-center">Pizzas disponibles</h1>
     <v-container>
       <v-row>
-        <!-- Pizza Mexicana -->
         <v-col
           v-for="(pizza, idx) in pizzas"
           :key="idx"
@@ -23,6 +22,9 @@
 
             <v-card-title>
               {{pizza.piz_nombre}}
+              <div class="ml-5 text-subtitle-1">
+                ${{pizza.precio}}
+              </div>
             </v-card-title>
 
             <v-card-subtitle>
@@ -93,7 +95,8 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn @click="addCarrito()">Agregar al carrito</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="error" @click="addCarrito()">Agregar al carrito</v-btn>
         </v-card-actions>
       </v-card>
 
@@ -129,7 +132,12 @@
           </th>
           <td>{{carrito.length}}</td>
           <td scope="row" colspan="2">
-              <button class="btn btn-danger" id="vaciar-carrito" style="width: 100%; margin: 5px;" @click="vaciarCarrito()">Vaciar todo</button>
+            <v-btn
+              color="error" 
+              id="vaciar-carrito" 
+              style="margin: 5px;" 
+              @click="vaciarCarrito()"
+            >Vaciar todo</v-btn>
           </td>
           <td class="font-weight-bold ">$<span>{{Total.suma}}</span></td>
         </v-simple-table>
@@ -209,7 +217,7 @@
           this.tamanios = api_data.data;
           api_data.data.forEach(item => {
             this.tamaniosValores.push({
-              text: item.tam_nombre,
+              text: item.tam_nombre + " + $" + item.costoExtra,
               value: item.id_tamanio
             });
           });
@@ -226,7 +234,6 @@
 
       async addCarrito() {
         this.nuevoPedido.subtotal = (this.pizzas[this.nuevoPedido.id_pizzaPre - 1].precio + this.tamanios[this.nuevoPedido.idTamanio - 1].costoExtra) * this.nuevoPedido.cantidad;
-        console.log(this.nuevoPedido);
 
         // Mandar "nuevoPedido" a tabla pedidopredeterminado INSERT INTO pedidopredeterminado (idPizzaPre, idOrden, cantidad, idTamanio, subtotal) VALUES (?) 
         try{
@@ -253,6 +260,7 @@
 
         this.CalcularTotal();
         this.tamanioDialog = false;
+        this.nuevoPedido = {};
       },
 
       async vaciarCarrito()

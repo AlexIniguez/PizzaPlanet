@@ -7,7 +7,7 @@ USE pizzeria_db;
 # Tabla de pizzas predeterminadas:
 CREATE TABLE IF NOT EXISTS pizzaPredeterminada(
 	id_pizzaPre TINYINT NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR(20) NOT NULL,
+    piz_nombre VARCHAR(20) NOT NULL,
     descripcion TINYTEXT NOT NULL,
     ingredientes TINYTEXT NOT NULL,
     imagen VARCHAR(30),
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS orden(
 # Tabla de tamaños:
 CREATE TABLE IF NOT EXISTS tamanioPizza(
 	id_tamanio INT NOT NULL AUTO_INCREMENT,
-    nombre ENUM('Chica', 'Mediana', 'Grande', 'Extra Grande') NOT NULL,
+    tam_nombre ENUM('Chica', 'Mediana', 'Grande', 'Extra Grande') NOT NULL,
     costoExtra DECIMAL (3, 1), 
     PRIMARY KEY (id_tamanio)
 );
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS pedidoPersonalizado(
         ON UPDATE CASCADE
 );
 
-INSERT INTO pizzaPredeterminada (nombre, descripcion, ingredientes, imagen, precio)
+INSERT INTO pizzaPredeterminada (piz_nombre, descripcion, ingredientes, imagen, precio)
 	VALUES ('Mexicana', 'Elaborada con los ingredientes habituales de la cocina mexicana.', 'Queso, salsa,
 				chorizo, carne molida y chile jalapeño', 'pizzaMexicana.jpg', 100),
 			('Al Pastor', 'Con esta fusión podrás disfrutar de ambas comidas en un solo mordisco, la exquisita 
@@ -121,7 +121,7 @@ INSERT INTO pizzaPredeterminada (nombre, descripcion, ingredientes, imagen, prec
                 combinación ideal.', 'Queso, salsa, piña, carne al pastor y cebolla', 'pizzaPastor.jpg', 100),
 			('Hawaiana', 'Combinación deliciosa de ingredientes que crean una mezcla de sabor salado y dulce.',
 				'Queso, salsa, jamón y piña.', 'pizzaHawaiana.jpg', 90),
-			('Pepperoni', 'La vieja confiable.', 'Queso, salsa y pepperoni.', 'pizzaPepperoni.jpg', 8idPizzaPreidPizzaPreidPizzaPre0),
+			('Pepperoni', 'La vieja confiable.', 'Queso, salsa y pepperoni.', 'pizzaPepperoni.jpg', 80),
             ('Vegetariana', 'Elaborada solo con verduras y vegetales sin cárnico alguno, para satisfacer 
 				las necesidades del público vegetariano.', 'Queso, salsa, champiñón, cebolla, pimiento morrón
                 y aceitunas.', 'pizzaVegetariana.jpg', 120),
@@ -137,7 +137,7 @@ INSERT INTO pizzaPredeterminada (nombre, descripcion, ingredientes, imagen, prec
 				de quesos diferentes.', 'Salsa, queso crema, queso mozzarella, queso parmesano y queso cheddar', 
 				'pizza4Quesos.jpg', 90);
                 
-INSERT INTO tamanioPizza (nombre, costoExtra)
+INSERT INTO tamanioPizza (tam_nombre, costoExtra)
 	VALUES ('Chica', 0),
 			('Mediana', 20),
             ('Grande', 40),
@@ -162,10 +162,3 @@ INSERT INTO ingrediente (nombre)
             ('Carne Molida'),
             ('Tocino'),
             ('Carne Al Pastor');
-
-INSERT INTO pedidopredeterminado (idPizzaPre, idOrden, cantidad, idTamanio, subtotal) VALUES ('','','','','');
-
-
-SELECT piz_nombre, tam_nombre  
-	FROM pizzapredeterminada, tamaniopizza 
-    WHERE id_pizzaPre=2 AND id_tamanio=3;
