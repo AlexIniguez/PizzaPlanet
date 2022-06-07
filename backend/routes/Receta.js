@@ -20,10 +20,19 @@ ruta.get('/', async (req, res) => {
 
 ruta.get('/:id', async (req, res) => {
     try {
-        const query = `SELECT * FROM receta WHERE idPizzaPer = ${req.params.id} `;
+        const query = `SELECT idIngrediente FROM receta WHERE idPizzaPer = ${req.params.id} `;
         const pizzas = await connection.query(query);
-
-        res.send(pizzas);
+        const results = JSON.parse(JSON.stringify(pizzas))
+        const array = []
+        
+        for(i in results)
+        {
+            const query2 = `SELECT nombre FROM ingrediente WHERE id_ingrediente = ${Object.values(results[i])} `;
+            let obj = await connection.query(query2);
+            let obj2 = JSON.parse(JSON.stringify(obj))
+            array.push(obj2[0]);
+        }
+        res.send(array);
     } catch (error) {
         console.log("error : ", error)
         return res.json({

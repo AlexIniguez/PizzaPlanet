@@ -10,12 +10,14 @@ app.use('/pizzaPre', require('./routes/pizzaPredeterminada'));
 app.use('/ingredientes', require('./routes/Ingredientes'));
 app.use('/tamanios', require('./routes/tamanio'));
 app.use('/ordenes', require('./routes/orden'));
+app.use('/pizzaPersonalizada', require('./routes/pizzaPersonalizada'));
+app.use('/receta', require('./routes/Receta'));
 
 app.get('/', (req, res) => {
     res.send("GET desde app.js");
 });
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 app.listen(port, () => {
     console.log(`Escuchando en el puerto ${port}.`);
