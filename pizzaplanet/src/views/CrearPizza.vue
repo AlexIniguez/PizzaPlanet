@@ -33,7 +33,7 @@
           <thead>
             <tr style="background-color:#D1493F;">
               <th style="font-size: 80px;" class="text-left titulo">
-                Ingrediente
+                Ingredente
               </th>
               <th class="text-left">
                 
