@@ -33,8 +33,8 @@ ruta.post('/nuevo_pedido', async (req, res) => {
 ruta.get('/id_to_datos/:id_pizzaPre/:idTamanio', async (req, res) => {
     try {
         const body = req.params;
-        const query = 'SELECT piz_nombre, tam_nombre FROM pizzapredeterminada, tamaniopizza WHERE id_pizzaPre=? AND id_tamanio=?';
-        const data = await connection.query(query, [body.id_pizzaPre,body.idTamanio]);
+        const query = 'SELECT piz_nombre, tam_nombre FROM pizzaPredeterminada, tamanioPizza WHERE id_pizzaPre=? AND id_tamanio=?';
+        const data = await connection.query(query, [body.id_pizzaPre, body.idTamanio]);
         res.send(data);
     } catch (error) {
         return res.json({
