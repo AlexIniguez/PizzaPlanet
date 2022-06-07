@@ -121,7 +121,7 @@ INSERT INTO pizzaPredeterminada (nombre, descripcion, ingredientes, imagen, prec
                 combinación ideal.', 'Queso, salsa, piña, carne al pastor y cebolla', 'pizzaPastor.jpg', 100),
 			('Hawaiana', 'Combinación deliciosa de ingredientes que crean una mezcla de sabor salado y dulce.',
 				'Queso, salsa, jamón y piña.', 'pizzaHawaiana.jpg', 90),
-			('Pepperoni', 'La vieja confiable.', 'Queso, salsa y pepperoni.', 'pizzaPepperoni.jpg', 80),
+			('Pepperoni', 'La vieja confiable.', 'Queso, salsa y pepperoni.', 'pizzaPepperoni.jpg', 8idPizzaPreidPizzaPreidPizzaPre0),
             ('Vegetariana', 'Elaborada solo con verduras y vegetales sin cárnico alguno, para satisfacer 
 				las necesidades del público vegetariano.', 'Queso, salsa, champiñón, cebolla, pimiento morrón
                 y aceitunas.', 'pizzaVegetariana.jpg', 120),
@@ -162,3 +162,10 @@ INSERT INTO ingrediente (nombre)
             ('Carne Molida'),
             ('Tocino'),
             ('Carne Al Pastor');
+
+INSERT INTO pedidopredeterminado (idPizzaPre, idOrden, cantidad, idTamanio, subtotal) VALUES ('','','','','');
+
+
+SELECT piz_nombre, tam_nombre  
+	FROM pizzapredeterminada, tamaniopizza 
+    WHERE id_pizzaPre=2 AND id_tamanio=3;

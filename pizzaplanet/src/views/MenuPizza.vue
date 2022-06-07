@@ -22,7 +22,7 @@
             </v-img>
 
             <v-card-title>
-              {{pizza.nombre}}
+              {{pizza.piz_nombre}}
             </v-card-title>
 
             <v-card-subtitle>
@@ -99,36 +99,42 @@
 
     </v-dialog>
 
-    <v-card class="card">
+    <v-card class="card carrito">
       <v-simple-table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Item</th>
+                    <th scope="col">Pizza</th>
+                    <th scope="col">Tamaño</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
-                    <th scope="col">Aciones</th>
-                    <th scope="col">Total</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr
                 v-for="item in carrito"
                       :key="item.id">
-                      <th scope="row">{{item.id_pizzaPre}}</th>
-                      <td>{{item.nombre}}</td>
+                      <th scope="row">{{item.nombre}}</th>
+                      <td>{{item.tamaño}}</td>
                       <td>{{item.cantidad}}</td>
-                      <td>{{item.precio}}</td>
                       <td>
-                          <v-btn class="bot">+</v-btn>
-                          <v-btn class="bot">-</v-btn>
-                      </td>
-                      <td>
-                          $ <span>500</span>
+                          $ <span>{{item.subtotal}}</span>
                       </td>
                   </tr>
             </tfoot>
         </v-simple-table>
+        <hr>
+        <v-simple-table class="card carritoFooter">
+          <th scope="row" colspan="2">
+              Total de productos
+          </th>
+          <td>{{carrito.length}}</td>
+          <td scope="row" colspan="2">
+              <button class="btn btn-danger" id="vaciar-carrito" style="width: 100%; margin: 5px;" @click="vaciarCarrito()">Vaciar todo</button>
+          </td>
+          <td class="font-weight-bold ">$<span>{{Total.suma}}</span></td>
+        </v-simple-table>
+        <hr>
+        <v-btn class="btnpagar">Pagar</v-btn>
     </v-card>
 
   </div>
@@ -143,12 +149,13 @@
         tamanios: [],
         tamaniosValores: [],
         ordenes: [],
-        carrito:[
-          {id_pizzaPre:1,nombre:"Mexicana",cantidad: 1, descripcion:"Elaborada con los ingredientes habituales de la cocina mexicana.",ingredientes:"Queso, salsa,\n\t\t\t\tchorizo, carne molida y chile jalapeño",imagen:"pizzaMexicana.jpg",precio:100}
-        ],
+        carrito:[],
+        vacio:[],
         mostrarIngredientes: false,
         tamanioDialog: false,
-
+        Total:{
+          suma: 0
+        },
         nuevoPedido: {
           id_pizzaPre: '',
           idOrden: '',
@@ -194,20 +201,6 @@
         }
       },
 
-      async crearPedido(id){
-        this.nuevoPedido.id_pizzaPre = id;
-        this.nuevoPedido.idOrden = this.ordenes[this.ordenes.length - 1].id_orden;
-        this.tamanioDialog = true;
-
-        
-      },
-
-      async addCarrito() {
-        this.nuevoPedido.subtotal = (this.pizzas[this.nuevoPedido.id_pizzaPre - 1].precio + this.tamanios[this.nuevoPedido.idTamanio - 1].costoExtra) * this.nuevoPedido.cantidad;
-        console.log(this.nuevoPedido);
-        // Asignarle a "objeto" el valor de: SELECT * FROM pizzapredeterminada WHERE id_pizzaPre=id
-      },
-
       async getTamanios()
       {
         //Obtener id del tamaño y retornarlo 
@@ -216,7 +209,7 @@
           this.tamanios = api_data.data;
           api_data.data.forEach(item => {
             this.tamaniosValores.push({
-              text: item.nombre,
+              text: item.tam_nombre,
               value: item.id_tamanio
             });
           });
@@ -225,11 +218,61 @@
         }
       },
 
+      async crearPedido(id){
+        this.nuevoPedido.id_pizzaPre = id;
+        this.nuevoPedido.idOrden = this.ordenes[this.ordenes.length - 1].id_orden;
+        this.tamanioDialog = true;
+      },
+
+      async addCarrito() {
+        this.nuevoPedido.subtotal = (this.pizzas[this.nuevoPedido.id_pizzaPre - 1].precio + this.tamanios[this.nuevoPedido.idTamanio - 1].costoExtra) * this.nuevoPedido.cantidad;
+        console.log(this.nuevoPedido);
+
+        // Mandar "nuevoPedido" a tabla pedidopredeterminado INSERT INTO pedidopredeterminado (idPizzaPre, idOrden, cantidad, idTamanio, subtotal) VALUES (?) 
+        try{
+          await this.axios.post('/pizzaPre/nuevo_pedido', this.nuevoPedido)
+        }catch(error){
+          console.log(error.response)
+        }
+        // SELECT piz_nombre, tam_nombre FROM pizzapredeterminada, tamaniopizza WHERE id_pizzaPre=? AND id_tamanio=?
+        try {
+          const api_data = await this.axios.get('/pizzaPre/id_to_datos/'+this.nuevoPedido.id_pizzaPre.toString()+'/'+this.nuevoPedido.idTamanio.toString());
+          
+          api_data.data.forEach((item) =>{
+            this.carrito.push({
+                nombre: item.piz_nombre,
+                tamaño: item.tam_nombre,
+                cantidad: this.nuevoPedido.cantidad,
+                subtotal: this.nuevoPedido.subtotal
+              });
+          });
+            console.log(this.carrito);
+        } catch (error) {
+          console.log(error.response)
+        }
+
+        this.CalcularTotal();
+        this.tamanioDialog = false;
+      },
+
+      async vaciarCarrito()
+      {
+        this.carrito = this.vacio;
+        
+      },
+
+      async CalcularTotal()
+      {
+        const api_data = await this.axios.get('/pizzaPre/total/'+this.nuevoPedido.idOrden.toString());
+        console.log(api_data.data);
+        this.Total = api_data.data;
+      },
+
       getImg(index) {
         var img = this.pizzas[index].imagen;
         var ruta = require('../assets/' + img);
         return ruta;
-      }
+      },
 
 
     }
@@ -241,11 +284,21 @@
   .card{
     margin: 20px 10% 0px 10%;
   }
-  
-  .bot{
-    padding: 5px;
-    color: red;
+
+  .carrito{
+    margin-bottom: 0px;
+    align-content: center;
   }
+
+  .carritoFooter{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-content: center;
+  }
+
+  .btnpagar{
+    margin: 20px;
+    }
 
 </style>
 
