@@ -122,6 +122,46 @@
               </v-col>
               <v-col>
                   <h1 class="text-center"> Detalles de Orden </h1>
+                  <v-card class="ticket">
+                    <v-simple-table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Pizza</th>
+                                    <th scope="col">Tamaño</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Precio</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr
+                                v-for="item in carrito"
+                                    :key="item.id">
+                                    <th scope="row">{{item.nombre}}</th>
+                                    <td>{{item.tamaño}}</td>
+                                    <td>{{item.cantidad}}</td>
+                                    <td>
+                                        $ <span>{{item.subtotal}}</span>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </v-simple-table>
+                        <hr>
+                        <v-simple-table class="card carritoFooter">
+                            <th scope="row" colspan="2">
+                                Total de productos
+                            </th>
+                            <td>{{carrito.length}}</td>
+                            <td scope="row" colspan="2">
+                                <v-btn
+                                color="error" 
+                                id="vaciar-carrito" 
+                                style="margin: 5px;" 
+                                @click="vaciarCarrito()"
+                                >Vaciar todo</v-btn>
+                            </td>
+                        <td class="font-weight-bold ">$<span>{{Total.suma}}</span></td>
+                        </v-simple-table>
+                  </v-card>
               </v-col>
           </v-row>
       </v-container>
@@ -132,8 +172,17 @@
 export default {
     data(){
         return {
-            dialog: false
+            dialog: false,
+            carrito: [],
+            Total:[]
         }
     }
 }
 </script>
+
+<style>
+    .ticket{
+        padding: 15px;
+        text-align-last: center;
+    }
+</style>
