@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 
 Vue.use(VueAxios, axios); // Utiliza el módulo de Axios
 
-axios.defaults.baseURL = 'http://localhost:5000'
+axios.defaults.baseURL = 'http://localhost:3000'
 
 new Vue({
   router,
