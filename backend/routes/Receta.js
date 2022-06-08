@@ -41,12 +41,12 @@ ruta.get('/', async (req, res) => {
 //     }
 // });
 
-ruta.get('/:id', async(req, res) => {
+ruta.get('/:id', async (req, res) => {
     try {
-        console.log(req.params);
         const query = 'SELECT * FROM receta WHERE idPizzaPer = ?';
         const recetas = await connection.query(query, [req.params.id]);
-        res.json(recetas);
+
+        res.send(recetas);
     } catch (error) {
         return res.json({
             error: error

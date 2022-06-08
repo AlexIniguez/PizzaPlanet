@@ -272,7 +272,6 @@
       async CalcularTotal()
       {
         const api_data = await this.axios.get('/pizzaPre/total/'+this.nuevoPedido.idOrden.toString());
-        console.log(api_data.data);
         this.Total = api_data.data;
       },
 
