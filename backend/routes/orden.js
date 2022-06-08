@@ -19,8 +19,11 @@ ruta.get('/', async (req, res) => {
 ruta.post('/nueva_orden', async (req, res) => {
     try {
         const query = 'INSERT INTO orden (total) VALUES (0)';
-        await connection.query(query);
-        res.send('Orden creada');
+        const respuesta = await connection.query(query);
+        let id = respuesta.insertId;
+        const query2 = 'SELECT * FROM orden WHERE id_orden = ' + id;
+        const orden = await connection.query(query2);
+        res.send(orden);
     } catch (error) {
         return res.json({
             error: error
