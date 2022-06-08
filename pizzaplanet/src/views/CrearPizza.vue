@@ -258,6 +258,17 @@
         this.carrito.splice(idx, 1);
       },
 
+      async ImprimirReceta(){
+        try {
+          console.log((this.receta.idPizzaPer).toString());
+          const api_data = await this.axios.get('/receta/', (this.receta.idPizzaPer).toString());
+          this.recetas = api_data.data;
+          console.log(this.recetas)
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
 
       async crearReceta(){
         this.e1 = 2;
@@ -272,17 +283,7 @@
         }
         
       },
-      async ImprimirReceta(){
-        try {
-          var route = '/receta/' + this.receta.idPizzaPer;
-          console.log(route)
-          const api_data = await this.axios.get(route);
-          this.recetas = api_data.data;
-          console.log(this.recetas)
-        } catch (error) {
-          console.log(error);
-        }
-      }
+      
     },
   }
 </script>

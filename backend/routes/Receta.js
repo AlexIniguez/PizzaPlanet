@@ -43,10 +43,10 @@ ruta.get('/', async (req, res) => {
 
 ruta.get('/:id', async(req, res) => {
     try {
+        console.log(req.params);
         const query = 'SELECT * FROM receta WHERE idPizzaPer = ?';
         const recetas = await connection.query(query, [req.params.id]);
-        console.log(recetas)
-        res.send(recetas)
+        res.json(recetas);
     } catch (error) {
         return res.json({
             error: error
