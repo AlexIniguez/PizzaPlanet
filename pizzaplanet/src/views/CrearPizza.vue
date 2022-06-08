@@ -236,7 +236,7 @@
                 <td class="font-weight-bold ">$<span>{{total.suma}}</span></td>
             </v-simple-table>
             <hr>
-            <v-btn class="btnpagar">Pagar</v-btn>
+            <v-btn style="margin: 20px;">Pagar</v-btn>
           </v-card>
           <div style="text-align:center;">
             <v-btn
