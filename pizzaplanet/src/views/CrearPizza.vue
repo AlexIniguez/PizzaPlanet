@@ -2,165 +2,191 @@
   <div>
     <header style="text-align: center; margin-top: 5vh"><h1>Prepara tu Pizza</h1></header>
     <v-container style="margin-top: 10vh; margin-bottom: 10vh;">
-    <v-stepper v-model="e1">
-    <v-stepper-header>
-      <v-stepper-step
-        :complete="e1 > 1"
-        step="1"
-      >
-        Tipo de Masa
-      </v-stepper-step>
-      <v-divider></v-divider>
-
-      <v-stepper-step
-        :complete="e1 > 2"
-        step="2"
-      >
-        Ingredientes
-      </v-stepper-step>
-
-      <v-divider></v-divider>
-
-      <v-stepper-step step="3">
-        Receta
-      </v-stepper-step>
-    </v-stepper-header>
-
-    <v-stepper-items>
-      <v-stepper-content step="1">
-        <v-card class="card">
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr style="background-color:#EE7035;">
-              <th style="font-size: 80px;" class="text-left titulo">
-                Masa
-              </th>
-              <th class="text-left">
-                
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="item in masas"
-              :key="item.name"
-            >
-              <td >{{ item.name }}</td>
-              <td style="width:10px;">
-                <v-btn @click="addCarritoMasa(item.name)" @click.stop="dialog = true"><v-icon>{{myIcon1}}</v-icon>
-                </v-btn>
-              </td>  
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-    </v-card>
-      </v-stepper-content>
-
-      <v-stepper-content step="2">
-        <v-card class="card">
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr style="background-color:#D1493F;">
-              <th style="font-size: 80px;" class="text-left titulo">
-                Ingredente
-              </th>
-              <th class="text-left">
-                
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr
-              v-for="item in ingredientes"
-              :key="item.nombre"              
-            >
-              <td>{{ item.nombre }}</td>
-              <td style="width:10px;"><v-btn @click="addCarritoIng(item.id_ingrediente)"><v-icon>{{ myIcon1 }}</v-icon></v-btn></td>               
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-    </v-card>
-     <div style="text-align:center;">
-        <v-btn text @click="e1=1">
-          Atrás
-        </v-btn>
-        <v-btn
-          color="primary"
-          @click="submitIngredientes(); ImprimirReceta()"
-        >
-          Continue
-        </v-btn>
-
-      </div>
-      </v-stepper-content>
-
-      <v-stepper-content step="3">
-        <v-card
-          class="mb-12"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
-      <div style="text-align:center;">
-        <v-btn text @click="e1 = 2">
-          Atrás
-        </v-btn>
-        <v-btn
-          color="primary"
-          @click="e1 = 1"
-        >
-          Continue
-        </v-btn>
-      </div>
-      </v-stepper-content>
-    </v-stepper-items>
-  </v-stepper>
-</v-container>
-<v-dialog
-      v-model="dialog"
-    width="400px"
-    height="500px"
-    >
-      <v-card style="text-align:center;">
-        <v-card-title class="text-h5" style="text-align:center;">
-          Masa Escogida
-        </v-card-title >
-          <v-container style="width:300px; height: 100px; margin-left:0px;"  >
-            La masa que se escogio es {{ masaEscogida }}
-          </v-container>
-
-        <v-card-text>
-          
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
+      <v-stepper v-model="e1">
+        <v-stepper-header>
+          <v-stepper-step
+            :complete="e1 > 1"
+            step="1"
           >
-            Cancelar
-          </v-btn>
+            Tipo de Masa
+          </v-stepper-step>
+          <v-divider></v-divider>
 
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false; submitMasa();"
-            
-          > Aceptar
-            
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+          <v-stepper-step
+            :complete="e1 > 2"
+            step="2"
+          >
+            Ingredientes
+          </v-stepper-step>
 
-    
+          <v-divider></v-divider>
+
+          <v-stepper-step step="3">
+            Receta
+          </v-stepper-step>
+        </v-stepper-header>
+
+        <v-stepper-items>
+          <v-stepper-content step="1">
+            <v-card class="card">
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr style="background-color:#EE7035;">
+                      <th style="font-size: 80px;" class="text-left titulo">
+                        Masa
+                      </th>
+                      <th class="text-left">
+                        
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <v-select
+                      class="ml-5"
+                      label="Escoge tu masa"
+                      :items="masas"
+                      v-model="nuevaPizza.masa"
+                    >
+
+                    </v-select>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </v-card>
+
+            <div style="text-align:center;">
+              <v-btn text @click="$router.push('/')">
+                Atrás
+              </v-btn>
+              <v-btn
+                :disabled="nuevaPizza.masa === ''"
+                color="#D1493F"
+                @click="crearPizza()"
+                
+              >
+                Continuar
+              </v-btn>
+
+            </div>
+          </v-stepper-content>
+
+          <v-stepper-content step="2">
+            <v-card class="card">
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr style="background-color:#D1493F;">
+                      <th style="font-size: 80px;" class="text-left titulo">
+                        Ingredientes
+                      </th>
+                      <th class="text-left">
+                        
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr
+                      v-for="item in ingredientes"
+                      :key="item.nombre"              
+                    >
+                      <td>{{ item.nombre }}</td>
+                      <td style="width:10px;"><v-btn @click="ingrediente = item; addCarritoIng()"><v-icon>mdi-plus</v-icon></v-btn></td>               
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </v-card>
+
+            <v-card class="card carrito">
+              <v-simple-table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Ingredientes</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr
+                          v-for="item in carrito"
+                          :key="item.id"
+                        >
+                          <th scope="row">{{item.nombre}}</th>
+                          <th scope="row">
+                            <v-btn
+                              class="mx-2"
+                              small
+                              fab
+                              dark
+                              color="error"
+                              @click="borrarIng(item.nombre)"
+                            >
+                              <v-icon>
+                                mdi-close-circle
+                              </v-icon>
+                            </v-btn>
+                          </th>
+                        </tr>
+                        
+                    </tfoot>
+                    
+                </v-simple-table>
+
+                <hr>
+                <v-simple-table class="card carritoFooter">
+                  <th scope="row" colspan="2">
+                      Total de ingredientes
+                  </th>
+                  <td>{{carrito.length}}</td>
+                  <td scope="row" colspan="2">
+                    <v-btn
+                      color="error" 
+                      id="vaciar-carrito" 
+                      style="margin: 5px;" 
+                      @click="carrito = []"
+                    >Vaciar todo</v-btn>
+                  </td>
+                </v-simple-table>
+                <hr>
+            </v-card>
+
+
+            <div style="text-align:center;">
+              <v-btn text @click="e1=1">
+                Atrás
+              </v-btn>
+              <v-btn
+                color="primary"
+                @click="crearReceta();"
+              >
+                Continuar
+              </v-btn>
+
+            </div>
+          </v-stepper-content>
+
+          <v-stepper-content step="3">
+            <v-card
+              class="mb-12"
+              color="grey lighten-1"
+              height="200px"
+            ></v-card>
+          <div style="text-align:center;">
+            <v-btn text @click="e1 = 2">
+              Atrás
+            </v-btn>
+            <v-btn
+              color="primary"
+              @click="e1 = 1"
+            >
+              Continue
+            </v-btn>
+          </div>
+          </v-stepper-content>
+        </v-stepper-items>
+      </v-stepper>
+    </v-container>
+
   </div>
 </template>
 
@@ -173,42 +199,23 @@
     data: () => ({
       singleExpand: false,
       ingredientes: [],
-      masas: [
-        {
-          id: 1,
-          name: 'Original'
-        },
-        {
-          id: 2,
-          name: 'Italiana'
-        },
-        {
-          id:3,
-          name: 'Sartén'
-        },
-        {
-          id:4,
-          name: 'Orilla rellena de queso'
-        },
-        {
-          id:5,
-          name: 'Crunchy'
-        }
-      ],
-      e1:1,
-      myIcon1: 'mdi-plus',
-      myIcon2: 'mdi-minus',
-      form1: {
-        "masa" : "",
-        "precio": 230.5
-      },
+      masas: ['Original', 'Italiana', 'Sartén', 'Orilla rellena de queso', 'Crunchy'],
+      e1: 1,
+
       bandera1: true,
       bandera2: true,
-      idPizza : 0,
-      PizzaReceta: [],
-      form2: [],
-      dialog: false,
-      masaEscogida: ''
+      receta: {
+        idPizzaPer: '',
+        ingredientes: []
+      },
+      recetas: [],
+      ingrediente: {},
+      carrito: [],
+      nuevaPizza: {
+        precio: 120,
+        masa: ''
+      },
+      
     }),
 
     created() {
@@ -219,55 +226,64 @@
       async getIngrediente() {
         try {
           const api_data = await this.axios.get('/ingredientes');
-          console.log(api_data);
           this.ingredientes = api_data.data;
-          console.log(productosCarrito);
         } catch (error) {
-          console.log(error.response)
+          console.log(error)
         }
       },
 
-      addCarritoMasa(masa2) {
-            this.form1.masa = masa2;
-            this.masaEscogida = masa2;
-            this.bandera1=false;
+      async crearPizza () {
+        this.e1 = 2;
+        try {
+          const api_data = await this.axios.post('/pizzaPersonalizada', this.nuevaPizza);
+          this.receta.idPizzaPer = api_data.data[0].id_pizzaPer;
+        } catch (error) {
+          console.log(error)
+        }
       },
-      submitMasa(){
-          this.axios.post("http://localhost:3000/pizzaPersonalizada", this.form1)
-            .then(data => {
-              console.log(data)
-              this.idPizza =  data.data[0].id_pizzaPer;
-            })
 
-        this.e1 = 2
+      addCarritoIng(){
+        var ingre = this.carrito.find(element => element.nombre === this.ingrediente.nombre)
+        if (!ingre) {
+          this.carrito.push({
+            nombre: this.ingrediente.nombre,
+            value: this.ingrediente.id_ingrediente
+          });
+        }
+        
       },
-      addCarritoIng(idIngrediente){
-        const obj = {"idPizzaPersonalizada" : idIngrediente};
-        this.form2.push(obj);
-      },
-      submitIngredientes(){
-        console.log("idPizza", this.idPizza)
-        console.log("form2", this.form2)
 
-        let ruta = `http://localhost:3000/receta/${this.idPizza}`
-        this.axios.post(ruta, this.form2)
-            .then(data => {
-              console.log(data)
-              //this.idPizza =  data.data[0].id_pizzaPer;
-            });
-        this.e1 = 3;
+      borrarIng(nombreIng) {
+        var idx = this.carrito.indexOf(this.carrito.find(element => element.nombre === nombreIng));
+        this.carrito.splice(idx, 1);
+      },
+
+
+      async crearReceta(){
+        this.e1 = 2;
+        this.carrito.forEach(element => {
+          this.receta.ingredientes.push(element.value)
+        });
+        try {
+          await this.axios.post('/receta', this.receta);
+          this.ImprimirReceta();
+        } catch (error) {
+          console.log(error)
+        }
+        
       },
       async ImprimirReceta(){
         try {
-          var vue = this
-          var route = '/receta/' + vue.idPizza;
-          let api_data2 = await vue.axios.get(route);
-          console.log("Receta : ", api_data2);
+          var route = '/receta/' + this.receta.idPizzaPer;
+          console.log(route)
+          const api_data = await this.axios.get(route);
+          this.recetas = api_data.data;
+          console.log(this.recetas)
         } catch (error) {
           console.log(error);
         }
       }
-      },
+    },
   }
 </script>
 

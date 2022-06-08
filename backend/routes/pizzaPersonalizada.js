@@ -7,16 +7,15 @@ const connection = require('../connection');
 
 ruta.post('/', async(req, res) => {
     try {
-        values = [req.body.precio, req.body.masa];
-        const query = 'INSERT INTO pizzaPersonalizada (precio, masa) VALUES (?)' ;
-        const respuesta = await connection.query(query, [values]);
+        const body = req.body;
+        const query = 'INSERT INTO pizzaPersonalizada (precio, masa) VALUES (?, ?)' ;
+        const respuesta = await connection.query(query, [body.precio, body.masa]);
         let id = respuesta.insertId;
-        const query2 = `SELECT * FROM PizzaPersonalizada WHERE id_pizzaPer = ${id}`;
+        const query2 = 'SELECT * FROM pizzaPersonalizada WHERE id_pizzaPer = ' + id;
         const pizza = await connection.query(query2);
-        res.json(pizza);
+        res.send(pizza);
 
     } catch (error) {
-        console.log("error : ", error)
         return res.json({
             error: error
         });
