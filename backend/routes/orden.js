@@ -28,4 +28,15 @@ ruta.post('/nueva_orden', async (req, res) => {
     }
 });
 
+ruta.get('/ultima_orden', async (req, res) => {
+    try {
+        const query = 'SELECT * FROM orden';
+        const id = await connection.query(query);
+        res.send(id[id.length -1]);
+    } catch (error) {
+        return res.json({
+            error: error
+        });
+    }
+});
 module.exports = ruta;

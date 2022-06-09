@@ -199,7 +199,7 @@ export default {
             //------------------
             const api_data = await this.axios.get('/ticket');
             this.id = api_data.data;
-            this.id.id_orden=this.id.id_orden-1;
+            console.log(this.id.id_orden);
 
                 //Pizzas predeterminadas que están en el id X
                 // try {

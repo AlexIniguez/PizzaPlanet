@@ -142,7 +142,7 @@
           <td class="font-weight-bold ">$<span>{{Total.suma}}</span></td>
         </v-simple-table>
         <hr>
-        <v-btn class="btnpagar" @click="$router.push('/pagar')">Pagar</v-btn>
+        <v-btn class="btnpagar" @click="$router.push('/pagarPred')">Pagar</v-btn>
     </v-card>
 
   </div>

@@ -21,9 +21,14 @@ const routes = [
     component: () => import( '../views/CrearPizza.vue')
   },
   {
-    path: '/pagar',
-    name: 'PagarCarrito',
-    component: () => import('../views/PagarCarrito.vue')
+    path: '/pagarPred',
+    name: 'PagarCarritoPred',
+    component: () => import('../views/PagarCarritoPred.vue')
+  },
+  {
+    path: '/pagarCreada',
+    name: 'PagarCarritoCreada',
+    component: () => import('../views/PagarCarritoCreada.vue')
   }
 
 ]
