@@ -362,7 +362,7 @@
           this.tamanios = api_data.data;
           api_data.data.forEach(item => {
             this.tamaniosValores.push({
-              text: item.tam_nombre + " + $" + item.costoExtra,
+              text: item.nombre + "($120 + $" + item.costoExtra + ")",
               value: item.id_tamanio
             });
           });
@@ -446,7 +446,7 @@
           api_data.data.forEach((item) =>{
             this.carrito.push({
               id: item.id_pizzaPer,
-              tamaño: item.tam_nombre,
+              tamaño: item.nombre,
               cantidad: this.nuevoPedido.cantidad,
               subtotal: this.nuevoPedido.subtotal
             });

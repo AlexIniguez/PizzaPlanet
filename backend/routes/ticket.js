@@ -18,8 +18,8 @@ ruta.get('/', async (req, res) => {
 ruta.get('/pizzaPre/:idOrden', async (req, res) => {
     try {
         const body = req.params.idOrden;
-        const query = 'SELECT piz_nombre, tam_nombre, subtotal, cantidad FROM pizzapredeterminada, tamaniopizza, pedidopredeterminado WHERE idTamanio = id_tamanio AND idOrden = ? AND idPizzaPre = id_pizzaPre;';
-        const ticket = await connection.query(query, [body]);
+        const query = 'SELECT pizzapredeterminada.nombre as p_nombre, tamaniopizza.nombre, cantidad, subtotal FROM pedidopredeterminado INNER JOIN pizzapredeterminada ON idPizzaPre = id_pizzaPre INNER JOIN tamaniopizza ON idTamanio = id_tamanio WHERE idOrden = ?';
+        const ticket = await connection.query(query, [body-1]);
         res.send(ticket);
     } catch (error) {
         return res.json({
@@ -31,7 +31,7 @@ ruta.get('/pizzaPre/:idOrden', async (req, res) => {
 ruta.get('/pizzaPersonalizada/:idOrden', async (req, res) => {
     try {
         const body = req.params.idOrden;
-        const query = 'SELECT idPizzaPer, cantidad, tam_nombre, subtotal FROM pedidoPersonalizado, tamanioPizza WHERE idOrden=? AND id_tamanio=idTamanio';
+        const query = 'SELECT idPizzaPer, cantidad, nombre, subtotal FROM pedidoPersonalizado, tamanioPizza WHERE idOrden=? AND id_tamanio=idTamanio';
         const ticket = await connection.query(query, [body])
         res.send(ticket);
     } catch (error) {
@@ -82,4 +82,20 @@ ruta.get('/total/:id_orden', async (req, res) => {
         });
     }
 });
+
+ruta.get('/total_pre/:id_orden', async (req, res) => {
+    try {
+        const body = req.params.id_orden;
+        const query = 'SELECT SUM(subtotal) AS suma FROM pedidopredeterminado WHERE idOrden = ?';
+        const total = await connection.query(query, [body-1]);
+
+        res.send(total[0]);
+    } catch (error) {
+        return res.json({
+            error: error
+        });
+    }
+});
+module.exports = ruta;
+
 module.exports = ruta;

@@ -51,7 +51,7 @@ ruta.get('/ultima_orden', async (req, res) => {
 ruta.get('/id_to_datos/:id_pizzaPer/:idTamanio', async (req, res) => {
     try {
         const body = req.params;
-        const query = 'SELECT id_pizzaPer, tam_nombre FROM pizzaPersonalizada, tamanioPizza WHERE id_pizzaPer = ? AND id_tamanio = ?';
+        const query = 'SELECT id_pizzaPer, nombre FROM pizzaPersonalizada, tamanioPizza WHERE id_pizzaPer = ? AND id_tamanio = ?';
         const data = await connection.query(query, [body.id_pizzaPer, body.idTamanio]);
         res.send(data);
     } catch (error) {

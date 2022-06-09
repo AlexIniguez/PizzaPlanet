@@ -21,7 +21,7 @@
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="12" >
-                                                <v-text-field label="Cantidad a pagar $(MX)" filled rounded>
+                                                <v-text-field label="Cantidad a pagar $(MX)" filled rounded readonly v-model="Total.suma">
                                                 </v-text-field>
                                             </v-col>
                                         </v-row>
@@ -66,7 +66,7 @@
                                   <v-container fill-height>
                                       <v-row>
                                             <v-col cols="12" sm="12" >
-                                                <v-text-field label="Cantidad a pagar $(MX)" filled rounded>
+                                                <v-text-field label="Cantidad a pagar $(MX)" filled rounded readonly v-model="Total.suma">
                                                 </v-text-field>
                                             </v-col>
                                         </v-row>
@@ -88,8 +88,8 @@
                           </v-tab>
                           <v-tab-item>
                               <v-card class="mx-auto">
-                                  <v-card-text class="text-h5">
-                                      Favor de pasar a caja
+                                  <v-card-text class="text-h5" v-model="Total.suma">
+                                      Favor de pasar a caja a pagar ${{ Total.suma }}
                                   </v-card-text>
                                   <v-container>
                                   <v-row align="center" justify="space-around">
@@ -105,7 +105,7 @@
                         <v-card>
                             <v-card-text>
                                 <p class="text-h5 text--primary">
-                                    Tu pago ha sido aprobado
+                                    Tu metodo de pago ha sido aprobado
                                 </p>
                             </v-card-text>
                             <v-card-actions>
@@ -150,28 +150,28 @@
                             <th scope="row" colspan="2">
                                 Total de productos
                             </th>
-                            <td>{{ticketPre.length}}</td>
+                            <!-- <td>{{ticketPre.length}}</td> -->
                             <td scope="row" colspan="2">
                             </td>
                             <td class="font-weight-bold ">$<span>{{Total.suma}}</span></td>
                         </v-simple-table>
                   </v-card>
-                  <v-card class="card">
-                      <v-simple-table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Fecha / Hora</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr
-                                v-for="item in id"
-                                    :key="item.id">
-                                    <th scope="row">{{item.fechaHora}}</th>
-                                </tr>
-                            </tfoot>
-                        </v-simple-table>
-                  </v-card>
+                    <!-- <v-card class="card">
+                        <v-simple-table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Fecha / Hora</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr
+                                    v-for="item in id"
+                                        :key="item.id">
+                                        <th scope="row">{{item.fechaHora}}</th>
+                                    </tr>
+                                </tfoot>
+                            </v-simple-table>
+                    </v-card> -->
               </v-col>
           </v-row>
       </v-container>
@@ -225,8 +225,8 @@ export default {
 
                     api_data.data.forEach((item) =>{
                         this.ticketPre.push({
-                            nombre: item.piz_nombre,
-                            tamaño: item.tam_nombre,
+                            nombre: item.p_nombre,
+                            tamaño: item.nombre,
                             cantidad: item.cantidad,
                             subtotal: item.subtotal
                         });
@@ -241,7 +241,7 @@ export default {
         },
         async getTotalPredeterminadas()
         {
-            const api_data = await this.axios.get('/ticket/total/'+this.id.id_orden.toString());
+            const api_data = await this.axios.get('/ticket/total_pre/'+this.id.id_orden.toString());
             this.Total = api_data.data;
             console.log(this.id.fechaHora)
         }

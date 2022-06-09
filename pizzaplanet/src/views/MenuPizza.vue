@@ -217,7 +217,7 @@
           this.tamanios = api_data.data;
           api_data.data.forEach(item => {
             this.tamaniosValores.push({
-              text: item.tam_nombre + " + $" + item.costoExtra,
+              text: item.nombre + " + $" + item.costoExtra,
               value: item.id_tamanio
             });
           });
@@ -247,8 +247,8 @@
           
           api_data.data.forEach((item) =>{
             this.carrito.push({
-                nombre: item.piz_nombre,
-                tamaño: item.tam_nombre,
+                nombre: item.p_nombre,
+                tamaño: item.nombre,
                 cantidad: this.nuevoPedido.cantidad,
                 subtotal: this.nuevoPedido.subtotal
               });
