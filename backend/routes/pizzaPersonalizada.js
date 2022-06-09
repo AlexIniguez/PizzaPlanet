@@ -62,17 +62,4 @@ ruta.get('/total/:idOrden', async (req, res) => {
     }
 });
 
-ruta.get('/total/:idOrden', async (req, res) => {
-    try {
-        const body = req.params.idOrden;
-        const query = 'SELECT SUM(subtotal) AS suma FROM pedidopredeterminado WHERE idOrden = ?';
-        const total = await connection.query(query, [body]);
-        res.send(total[0]);
-    } catch (error) {
-        return res.json({
-            error: error
-        });
-    }
-});
-
 module.exports = ruta;
