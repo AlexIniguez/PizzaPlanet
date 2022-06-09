@@ -12,6 +12,7 @@ app.use('/tamanios', require('./routes/tamanio'));
 app.use('/ordenes', require('./routes/orden'));
 app.use('/pizzaPersonalizada', require('./routes/pizzaPersonalizada'));
 app.use('/receta', require('./routes/Receta'));
+app.use('/ticket', require('./routes/ticket'));
 
 app.get('/', (req, res) => {
     res.send("GET desde app.js");

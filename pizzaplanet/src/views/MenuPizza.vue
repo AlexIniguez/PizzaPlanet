@@ -142,7 +142,7 @@
           <td class="font-weight-bold ">$<span>{{Total.suma}}</span></td>
         </v-simple-table>
         <hr>
-        <v-btn class="btnpagar">Pagar</v-btn>
+        <v-btn class="btnpagar" @click="$router.push('/pagarPred')">Pagar</v-btn>
     </v-card>
 
   </div>
@@ -273,6 +273,7 @@
       {
         const api_data = await this.axios.get('/pizzaPre/total/'+this.nuevoPedido.idOrden.toString());
         this.Total = api_data.data;
+        console.log(this.Total)
       },
 
       getImg(index) {

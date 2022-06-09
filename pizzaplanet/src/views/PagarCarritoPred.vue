@@ -122,6 +122,56 @@
               </v-col>
               <v-col>
                   <h1 class="text-center"> Detalles de Orden </h1>
+                  <v-card class="ticket">
+                    <v-simple-table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Pizza</th>
+                                    <th scope="col">Tamaño</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Precio</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr
+                                v-for="item in ticketPre"
+                                    :key="item.id">
+                                    <th scope="row">{{item.nombre}}</th>
+                                    <td>{{item.tamaño}}</td>
+                                    <td>{{item.cantidad}}</td>
+                                    <td>
+                                        $ <span>{{item.subtotal}}</span>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </v-simple-table>
+                        <hr>
+                        <v-simple-table class="card carritoFooter">
+                            <th scope="row" colspan="2">
+                                Total de productos
+                            </th>
+                            <td>{{ticketPre.length}}</td>
+                            <td scope="row" colspan="2">
+                            </td>
+                            <td class="font-weight-bold ">$<span>{{Total.suma}}</span></td>
+                        </v-simple-table>
+                  </v-card>
+                  <v-card class="card">
+                      <v-simple-table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fecha / Hora</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr
+                                v-for="item in id"
+                                    :key="item.id">
+                                    <th scope="row">{{item.fechaHora}}</th>
+                                </tr>
+                            </tfoot>
+                        </v-simple-table>
+                  </v-card>
               </v-col>
           </v-row>
       </v-container>
@@ -132,8 +182,95 @@
 export default {
     data(){
         return {
-            dialog: false
+            dialog: false,
+            ticketPre: [],
+            Total:{suma:0},
+            id:{}
+        }
+    },
+
+    created(){
+        this.getOrden();
+        
+    },
+
+    methods: {
+        async getOrden(){
+            //------------------
+            const api_data = await this.axios.get('/ticket');
+            this.id = api_data.data;
+            console.log(this.id.id_orden);
+
+                //Pizzas predeterminadas que están en el id X
+                // try {
+                //     const api_data = await this.axios.get('/ticket/pizzaPersonalizada/'+this.id.id_orden.toString());
+                    
+                //     api_data.data.forEach((item) =>{
+                //         this.ticketPre.push({
+                //             nombre: item.piz_nombre,
+                //             tamaño: item.tam_nombre,
+                //             cantidad: this.nuevoPedido.cantidad,
+                //             subtotal: this.nuevoPedido.subtotal
+                //         });
+                //     });
+                //         //console.log(this.ticket);
+                // } catch (error) {
+                // console.log(error.response)
+                // }
+            //------------------------------------------------------
+            //------------------------------------------------------
+                //Pizzas personalizadas que están en el id X
+                try {
+                    const api_data = await this.axios.get('/ticket/pizzaPre/'+this.id.id_orden.toString());
+
+                    api_data.data.forEach((item) =>{
+                        this.ticketPre.push({
+                            nombre: item.piz_nombre,
+                            tamaño: item.tam_nombre,
+                            cantidad: item.cantidad,
+                            subtotal: item.subtotal
+                        });
+                    });
+                } catch (error) {
+                console.log(error.response)
+                }
+                this.getTotalPredeterminadas();
+            //-------------------------------------------------------
+
+            
+        },
+        async getTotalPredeterminadas()
+        {
+            const api_data = await this.axios.get('/ticket/total/'+this.id.id_orden.toString());
+            this.Total = api_data.data;
+            console.log(this.id.fechaHora)
         }
     }
 }
 </script>
+
+<style>
+    .ticket{
+        padding: 15px;
+        text-align-last: center;
+    }
+
+      .card{
+    margin: 20px 10% 0px 10%;
+  }
+
+  .carrito{
+    margin-bottom: 0px;
+    align-content: center;
+  }
+
+  .carritoFooter{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-content: center;
+  }
+
+  .btnpagar{
+    margin: 20px;
+    }
+</style>

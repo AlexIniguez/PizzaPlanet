@@ -36,6 +36,18 @@ ruta.post('/nuevo_pedido', async (req, res) => {
     }
 });
 
+ruta.get('/ultima_orden', async (req, res) => {
+    try {
+        const query = 'SELECT * FROM orden';
+        const id = await connection.query(query);
+        res.send(id[id.length -1]);
+    } catch (error) {
+        return res.json({
+            error: error
+        });
+    }
+});
+
 ruta.get('/id_to_datos/:id_pizzaPer/:idTamanio', async (req, res) => {
     try {
         const body = req.params;
@@ -53,19 +65,6 @@ ruta.get('/total/:idOrden', async (req, res) => {
     try {
         const body = req.params.idOrden;
         const query = 'SELECT SUM(subtotal) AS suma FROM pedidoPersonalizado WHERE idOrden = ?';
-        const total = await connection.query(query, [body]);
-        res.send(total[0]);
-    } catch (error) {
-        return res.json({
-            error: error
-        });
-    }
-});
-
-ruta.get('/total/:idOrden', async (req, res) => {
-    try {
-        const body = req.params.idOrden;
-        const query = 'SELECT SUM(subtotal) AS suma FROM pedidopredeterminado WHERE idOrden = ?';
         const total = await connection.query(query, [body]);
         res.send(total[0]);
     } catch (error) {

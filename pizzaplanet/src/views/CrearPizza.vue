@@ -236,7 +236,7 @@
                 <td class="font-weight-bold ">$<span>{{total.suma}}</span></td>
             </v-simple-table>
             <hr>
-            <v-btn style="margin: 20px;">Pagar</v-btn>
+            <v-btn style="margin: 20px;" @click="$router.push('/pagarCreada')">Pagar</v-btn>
           </v-card>
           <div style="text-align:center;">
             <v-btn
@@ -345,7 +345,10 @@
       {
         try{
           const api_data = await this.axios.post('/ordenes/nueva_orden');
-          this.nuevoPedido.idOrden = api_data.data[0].id_orden;
+          const api_data2 = await this.axios.get('/ordenes/ultima_orden');
+          console.log(api_data2.data);
+          this.nuevoPedido.idOrden = api_data2.data.id_orden;
+          console.log(this.nuevoPedido.idOrden);
         } catch(error){
           console.log(error.response)
         }
@@ -431,6 +434,7 @@
         this.nuevoPedido.subtotal = (this.nuevaPizza.precio + this.tamanios[this.nuevoPedido.idTamanio - 1].costoExtra) * this.nuevoPedido.cantidad;
         // Mandar "nuevoPedido" a tabla pedidopredeterminado INSERT INTO pedidopredeterminado (idPizzaPre, idOrden, cantidad, idTamanio, subtotal) VALUES (?) 
         try {
+          console.log(this.nuevoPedido);
           await this.axios.post('/pizzaPersonalizada/nuevo_pedido', this.nuevoPedido)
         } catch(error){
           console.log(error.response)
