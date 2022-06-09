@@ -137,7 +137,7 @@
                                 <tr
                                 v-for="item in ticketPre"
                                     :key="item.id">
-                                    <th scope="row">{{item.nombre}}</th>
+                                    <th scope="row">{{item.idPizzaPer}}</th>
                                     <td>{{item.tamaño}}</td>
                                     <td>{{item.cantidad}}</td>
                                     <td>
@@ -214,17 +214,14 @@ export default {
                         this.ticketPre.push({
                             idPizzaPer: item.idPizzaPer,
                             tamaño: item.tam_nombre,
-                            cantidad: this.nuevoPedido.cantidad,
-                            subtotal: this.nuevoPedido.subtotal
+                            cantidad: item.cantidad,
+                            subtotal: item.subtotal
                         });
                     });
                 } catch (error) {
                 console.log(error.response)
                 }
                 
-                this.getIngredientes();
-                this.getMasas();
-            //------------------------------------------------------
                 this.getTotalPredeterminadas();
             //-------------------------------------------------------
 
@@ -234,16 +231,6 @@ export default {
         {
             const api_data = await this.axios.get('/ticket/total/'+this.id.id_orden.toString());
             this.Total = api_data.data;
-        },
-        async getIngredientes()
-        {
-            const api_data = await this.axios.get('/ticket/ingredientes/'+this.ticketPre.idPizzaPer.toString());
-            this.Ingredientes = api_data.data;
-        },
-        async getMasas()
-        {
-            const api_data = await this.axios.get('/ticket/masas/'+this.ticketPre.idPizzaPer.toString());
-            this.Masa = api_data.data;
         }
     }
 }
