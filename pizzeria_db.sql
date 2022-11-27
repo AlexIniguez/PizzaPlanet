@@ -192,3 +192,5 @@ SELECT * FROM receta;
 SELECT idPizzaPer, cantidad, tam_nombre, subtotal FROM pedidoPersonalizado, tamanioPizza WHERE idOrden=177 AND id_tamanio=idTamanio;
 
 SELECT SUM(subtotal) AS suma FROM pedidoPersonalizado WHERE idOrden = 178;
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'
