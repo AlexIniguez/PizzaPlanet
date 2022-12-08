@@ -1,10 +1,13 @@
 <template>
-  <div>
-    <header style="text-align: center; margin-top: 5vh"><h1>Prepara tu Pizza</h1></header>
-    <v-container style="margin-top: 10vh; margin-bottom: 10vh;">
+  <div class="canvas">
+    <header class="header">
+      <h1>CREA TU PIZZA</h1>
+    </header>
+    <v-container class="container">
       <v-stepper v-model="e1">
         <v-stepper-header>
           <v-stepper-step
+            color="#D1493F"
             :complete="e1 > 1"
             step="1"
           >
@@ -13,6 +16,7 @@
           <v-divider></v-divider>
 
           <v-stepper-step
+            color="#D1493F"
             :complete="e1 > 2"
             step="2"
           >
@@ -21,19 +25,21 @@
 
           <v-divider></v-divider>
 
-          <v-stepper-step step="3">
+          <v-stepper-step
+            color="#D1493F"
+            step="3">
             Receta
           </v-stepper-step>
         </v-stepper-header>
 
         <v-stepper-items>
           <v-stepper-content step="1">
-            <v-card class="card">
+            <v-card class="card" color="blue-grey lighten-1">
               <v-simple-table>
                 <template v-slot:default>
                   <thead>
                     <tr style="background-color:#EE7035;">
-                      <th style="font-size: 80px;" class="text-left titulo">
+                      <th style="font-size: 20px; color: #FFF;" class="text-left titulo">
                         Masa
                       </th>
                       <th class="text-left">
@@ -76,8 +82,8 @@
               <v-simple-table>
                 <template v-slot:default>
                   <thead>
-                    <tr style="background-color:#D1493F;">
-                      <th style="font-size: 80px;" class="text-left titulo">
+                    <tr style="background-color:#EE7035;">
+                      <th style="font-size: 20px; color: #FFF;" class="text-left titulo">
                         Ingredientes
                       </th>
                       <th class="text-left">
@@ -102,8 +108,8 @@
             <v-card class="card carrito">
               <v-simple-table class="table">
                     <thead>
-                        <tr>
-                            <th scope="col">Ingredientes</th>
+                        <tr style="background-color:#EE7035">
+                            
                         </tr>
                     </thead>
                     <tfoot>
@@ -287,9 +293,6 @@
       </v-card>
 
     </v-dialog>
-
-    
-
   </div>
 </template>
 
@@ -494,7 +497,33 @@
 </script>
 
 <style scoped>
+  .canvas{
+    background-image: url('../assets/fondo.svg') ;
+    position: fixed;
+    top: -5px;
+    left: -2px;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  .header{
+    text-align: center; 
+    padding-top: 5vh;
+    color: #FFF;
+    font-size: 40px;
+  }
+  .container{
+    text-align: center; 
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    width: 800px;
+  }
   .card{
+    background-color: rgba(100, 0, 100, 1);
     margin: 20px 10% 0px 10%;
     margin-top: 5vh;
     margin-bottom:10vh;
