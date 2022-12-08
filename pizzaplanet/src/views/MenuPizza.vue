@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1 class="text-center">Pizzas disponibles</h1>
-    <v-container>
+  <div id="background" class="background-image" >
+    <h1 class="text-center">PIZZAS DISPLONIBLES</h1>
+    <v-container class="card-container">
       <v-row>
         <v-col
           v-for="(pizza, idx) in pizzas"
@@ -13,6 +13,7 @@
           <v-card
             class="mx-auto"
             min-height="400px"
+            color="#282348"
           >
             <v-img
               :src="getImg(idx)"
@@ -28,25 +29,31 @@
             </v-card-title>
 
             <v-card-subtitle>
-              {{pizza.descripcion}}
+              <div class="ml-6 text-subtitle-2">
+                {{pizza.descripcion}}
+              </div>
             </v-card-subtitle>
 
             <v-card-actions>
               <v-btn
-                color="#D1493F"
-                text
+                color="amber"
+                elevation="5"
+                rounded
                 @click="mostrarIngredientes = !mostrarIngredientes"
 
               >
                 Ingredientes
-                <v-icon>{{ mostrarIngredientes ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                <v-icon>
+                  {{ mostrarIngredientes ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+                </v-icon>
               </v-btn>
               
               <v-spacer></v-spacer>
 
               <v-btn
-                color="#D1493F"
-                text
+                color="error"
+                elevation="5"
+                rounded
                 @click="crearPedido(pizza.id_pizzaPre)"
               >
                 Comprar
@@ -102,8 +109,8 @@
 
     </v-dialog>
 
-    <v-card class="card carrito">
-      <v-simple-table class="table">
+    <v-card color="#282348" class="card carrito">
+      <v-simple-table dark class="table">
             <thead>
                 <tr>
                     <th scope="col">Pizza</th>
@@ -126,7 +133,7 @@
             </tfoot>
         </v-simple-table>
         <hr>
-        <v-simple-table class="card carritoFooter">
+        <v-simple-table dark class="card carritoFooter">
           <th scope="row" colspan="2">
               Total de productos
           </th>
@@ -142,7 +149,10 @@
           <td class="font-weight-bold ">$<span>{{Total.suma}}</span></td>
         </v-simple-table>
         <hr>
-        <v-btn class="btnpagar" @click="$router.push('/pagarPred')">Pagar</v-btn>
+        <v-btn color="error"
+                elevation="5"
+                rounded 
+                class="btnpagar" @click="$router.push('/pagarPred')">Pagar</v-btn>
     </v-card>
 
   </div>
@@ -289,7 +299,12 @@
 </script>
 
 <style scoped>
-  .card{
+.background-image {
+  background-image: url("../assets/fondo.svg");
+  background-size:cover;
+  
+}
+.card{
     margin: 20px 10% 0px 10%;
   }
 
@@ -308,5 +323,18 @@
     margin: 20px;
     }
 
-</style>
+  .text-center {
+    color: #fff;
+    font-family: "Roboto" ,sans-serif;
+    background-color: #282348;
+  }
 
+  .ml-5 {
+    color: #fff;
+  }
+
+  .ml-6 {
+    color: #fff;
+  }
+
+</style>
